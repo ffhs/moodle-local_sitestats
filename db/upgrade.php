@@ -58,5 +58,17 @@ function xmldb_local_sitestats_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2019080107, 'local', 'sitestats');
     }
 
+    if ($oldversion < 2019080108) {
+        // Rename field key on table local_sitestats_core to name.
+        $table = new xmldb_table('local_sitestats_core');
+        $field = new xmldb_field('key', XMLDB_TYPE_CHAR, '200', null, XMLDB_NOTNULL, null, null, 'site');
+
+        // Launch rename field key.
+        $dbman->rename_field($table, $field, 'name');
+
+        // Sitestats savepoint reached.
+        upgrade_plugin_savepoint(true, 2019080108, 'local', 'sitestats');
+    }
+
     return true;
 }
