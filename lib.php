@@ -30,6 +30,10 @@ defined('MOODLE_INTERNAL') || die();
  * @param global_navigation $navigation
  */
 function local_sitestats_extend_navigation(global_navigation $navigation) {
+    if (!has_capability('local/sitestats:view', context_system::instance())) {
+        return;
+    }
+
     // Create sitestats node.
     $sitestatsnode = navigation_node::create(get_string('pluginname', 'local_sitestats'),
         new moodle_url('/local/sitestats/index.php'),
